@@ -5,4 +5,4 @@
 
 <br />- Dynamic Allocation<br />- Reading and saving binary files<br />- Abstract Data Type<br />- Sorting by QuickSort method <br />
 
-<sub>It's important to remember that this program was written by graduation students, so its not guaranteed 100% of otimization and 100% correct use every expected concepts</sub>
+<sub>*It's important to remember that this program was written by graduation students, so its not guaranteed 100% of otimization and 100% correct use every expected concepts*</sub>
