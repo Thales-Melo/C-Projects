@@ -3,10 +3,12 @@
 
 **SpotFES includes some important C concepts as:**
 
-<br />- Dynamic Memory Allocation<br />
+<br />
+- Dynamic Memory Allocation<br />
 - Reading and saving text and binary files<br />
 - Use of structs<br />
 - Abstract Data Type<br />
 - Sorting by QuickSort method <br />
+<br />
 
 <sub>*It's important to remember that this program was written by graduation students, so its not guaranteed 100% of otimization and 100% of correct use of every expected concepts*</sub>
