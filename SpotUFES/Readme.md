@@ -20,7 +20,7 @@
 - Recommend playlist's similar songs
 
 <br />
-The line 27 contain a difference related to the given csv files. To run the program correctly, you might change "artists_full.csv" to "artists_3480.csv"
+<sub>OBS: The line 27 contain a difference related to the given csv files. To run the program correctly, you might change "artists_full.csv" to "artists_3480.csv"</sub>
 <br />
 
 <sub>*It's important to remember that this program was written by graduation students, so its not guaranteed 100% of otimization and 100% of correct use of every expected concepts*</sub>
