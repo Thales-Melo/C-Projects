@@ -23,7 +23,7 @@
 **OBS:**
 
 <sub>- The line 27 (tArtistas.c) contains a difference related to the given csv files. To run the program correctly, you might change "artists_full.csv" to "artists_3480.csv"
-</sub>
+</sub><br />
 <sub>- Also in the line 44 (tMusicas.c) there is a similar difference, so you might change "tracks_full.csv" to "tracks_3480.csv"</sub>
 <br /><br />
 
