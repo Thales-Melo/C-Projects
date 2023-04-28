@@ -10,5 +10,7 @@ int main() {
 
   free_Bib(B);
 
+  //teste  
+
   return 0;
 }
