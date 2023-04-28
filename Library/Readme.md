@@ -22,4 +22,4 @@ This project uses some important C concepts as:
         - Etc...
 
 
-*Project under development*
+*<small>Project under development</small>*
