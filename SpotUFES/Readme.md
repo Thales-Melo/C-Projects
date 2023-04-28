@@ -20,7 +20,7 @@
 - Recommend playlist's similar songs
 
 <br />
-**OBS:**
+**OBS**
 
 <sub>- The line 27 (tArtistas.c) contains a difference related to the given csv files. To run the program correctly, you might change "artists_full.csv" to "artists_3480.csv"
 </sub><br />
