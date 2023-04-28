@@ -10,7 +10,7 @@ int main() {
 
   free_Bib(B);
 
-  //teste  
+  teste/
 
   return 0;
 }
