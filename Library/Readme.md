@@ -21,5 +21,4 @@ This project uses some important C concepts as:
         - Book sorting
         - Etc...
 
-a
 *<sub>Project under development</sub>*
