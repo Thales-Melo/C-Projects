@@ -1,6 +1,6 @@
 CC = gcc
-CFLAGS = -Wall -Werror -std=c99 -Wno-unused-result -fdiagnostics-show-option -fsanitize=address
-LDFLAGS = -Wno-unused-result -fsanitize=address
+CFLAGS = -Wall -Werror -std=c99 -Wno-unused-result -fdiagnostics-show-option
+LDFLAGS = -Wno-unused-result
 
 SRCS = main.c livro.c
 OBJS = $(SRCS:.c=.o)
