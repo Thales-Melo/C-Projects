@@ -1,10 +1,9 @@
-#ifndef _LIVRO_H_
-#define _LIVRO_H_
+#ifndef _T_LIVRO_H_
+#define _T_LIVRO_H_
 
 #include <stdio.h>
 #include <stdlib.h>
-
-#define MAX_STRING 100
+#include "utils.h"
 
 typedef struct livro tLivro;
 typedef struct Biblioteca tBib;
@@ -12,12 +11,14 @@ typedef struct Biblioteca tBib;
 // Initializes a struct type tLivro pointer, which includes book`s contents as:
 // Title (STR), Author (STR), Edition (INT) and Number of Pages (INT)
 // OBS: It doesnt need any argument and it returns a type tLivro*
-tLivro *Init_Books();
+tLivro *init_Books(int num_Books);
 
 // Initializes a struct type tBib pointer, which includes library`s contents as:
 // Double pointer for a struct type tLivro, which is a book`s catalog, Num of Books
 // OBS: It doesnt need any argument and in returns a type tBib*
 tBib *init_Bib();
+
+int read_Num_Books (char *file, tBib *B);
 
 // It fills the book`s content
 // Void function which requires only one tBib* argument

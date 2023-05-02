@@ -1,4 +1,4 @@
-#include "livro.h"
+#include "tLivro.h"
 
 typedef struct livro {
 
@@ -17,7 +17,9 @@ typedef struct Biblioteca {
 } tBib;
 
 
-tLivro* Init_Books () {
+
+
+tLivro* init_Books (int num_Books) {
   
     tLivro *L;
     L=(tLivro*)malloc(sizeof(tLivro));
@@ -30,20 +32,53 @@ tLivro* Init_Books () {
 tBib* init_Bib () {
   
     tBib *B;
-    int QuantLivros;
-    printf ("Quantos livros serão catalogados: ");
-    scanf ("%d", &QuantLivros);
 
     B=(tBib*)malloc(sizeof(tBib));
-    B->Books=(tLivro**)malloc(sizeof(tLivro*)*QuantLivros);
-    B->num_Books=QuantLivros;
+    B->num_Books = read_Num_Books(BIBLIOTECA, B);
+    B->Books=(tLivro**)malloc(sizeof(tLivro*)*B->num_Books+1);
 
     for (int i=0; i<B->num_Books; i++) {
-        B->Books[i]=Init_Books();
+      B->Books[i]=Init_Books();
     }
 
   return B;
 }
+
+int read_Num_Books (char *file, tBib *B) {
+
+  FILE *F = fopen(file, "r");
+  
+  if (F==NULL) {
+    fclose(F);
+    F = fopen(file, "w");
+    fprintf (F, "0"); 
+    fclose(F);
+  }
+
+  F = fopen (file, "r");
+
+  fscanf (F, "%d", B->num_Books);
+
+  fclose (F);
+  
+  return B->num_Books;
+
+}
+
+
+void read_Bib_File (char *file, tBib *B) {
+  FILE *F = fopen(file, "r");
+
+  fscanf (F, "%d", B->num_Books);
+  int i=0;
+  while (!FEOF) {
+
+    fscanf (F, "%s | %s | %d | %d", B->Books[i]->title, B->Books[i]->author, B->Books[i]->edit, B->Books[i]->num_Pages);
+    i++;
+  }
+
+}
+
 
 void preenche_Livros (tBib *B) {
 
