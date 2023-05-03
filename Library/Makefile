@@ -1,5 +1,5 @@
 CC = gcc
-CFLAGS = -Wall -Werror -std=c99 -Wno-unused-result -fdiagnostics-show-option
+CFLAGS = -Wall -Werror -Wno-unused-result -fdiagnostics-show-option
 LDFLAGS = -Wno-unused-result
 
 SRCS = main.c tLivro.c tInterface.c utils.c mainFunctions.c
