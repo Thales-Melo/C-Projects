@@ -3,6 +3,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include "utils.h"
 
 typedef struct livro tLivro;
@@ -35,5 +36,7 @@ void free_Book(tLivro *L);
 // It frees the content of a library
 // Void funciont which requires only one tBib* argument
 void free_Bib(tBib *B);
+
+char *getLine (FILE *F, int line_number);
 
 #endif
