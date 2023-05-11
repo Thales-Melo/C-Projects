@@ -4,7 +4,7 @@ typedef struct livro {
 
     char *title;
     char *author;
-    int edit;
+    char *edit;
     int num_Pages;
 
 } tLivro;
@@ -25,7 +25,8 @@ tLivro* init_Books (int num_Books) {
     L=(tLivro*)malloc(sizeof(tLivro));
     L->title=(char*)malloc(sizeof(char)*MAX_STRING);
     L->author=(char*)malloc(sizeof(char)*MAX_STRING);
-
+    L->edit=(char*)malloc(sizeof(char)*MAX_STRING);
+  
   return L;    
 }
 
@@ -38,7 +39,7 @@ tBib* init_Bib () {
     B->Books=(tLivro**)malloc(sizeof(tLivro*)*B->num_Books+1);
 
     for (int i=0; i<B->num_Books; i++) {
-      B->Books[i]=Init_Books();
+      B->Books[i]=init_Books(B->num_Books);
     }
 
   return B;
@@ -57,7 +58,7 @@ int read_Num_Books (char *file, tBib *B) {
 
   F = fopen (file, "r");
 
-  fscanf (F, "%d", B->num_Books);
+  fscanf (F, "%d", &B->num_Books);
 
   fclose (F);
   
@@ -69,14 +70,29 @@ int read_Num_Books (char *file, tBib *B) {
 void read_Bib_File (char *file, tBib *B) {
   FILE *F = fopen(file, "r");
 
-  fscanf (F, "%d", B->num_Books);
   int i=0;
-  while (!FEOF) {
-
-    fscanf (F, "%s | %s | %d | %d", B->Books[i]->title, B->Books[i]->author, B->Books[i]->edit, B->Books[i]->num_Pages);
+  char delim[3]=" | ";
+  while (!(feof(F))) {
+    char *line = strdup(getLine(F, i));
+    char *token = strtok(line, delim);
+    
+    for (int j=0; j<4; j++) {
+      token = strtok(NULL, delim);
+      switch (j) {
+        case 0:
+          B->Books[i]->title=strdup(token);
+        case 1:
+          B->Books[i]->author=strdup(token);
+        case 2:
+          B->Books[i]->edit=strdup(token);
+        case 3:
+          B->Books[i]->num_Pages=strtol(token, NULL, 10);
+    }
     i++;
+    
+    
   }
-
+  fclose(F);
 }
 
 
@@ -159,5 +175,23 @@ void free_Bib (tBib *B) {
     free (B);
     B = NULL;
   }
+  
+}
+
+char *getLine (FILE *F, int line_number) {
+
+  int i=0;
+  char delim[]="\n";
+  char *token = strtok(token, delim);
+  
+  while (!(feof(F))) {
+    if (i==line_number) {
+      break;
+    }
+    i++; 
+    token = strtok(NULL, delim);
+  }
+
+  return token;
   
 }
