@@ -4,6 +4,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <sys/types.h>
 #include "utils.h"
 
 typedef struct livro tLivro;
@@ -19,7 +20,11 @@ tLivro *init_Books(int num_Books);
 // OBS: It doesnt need any argument and in returns a type tBib*
 tBib *init_Bib();
 
+void read_Bib_File(char *file, tBib *B);
+
 int read_Num_Books (char *file, tBib *B);
+
+void store_Bib_Data (tBib *B, char *line, int i);
 
 // It fills the book`s content
 // Void function which requires only one tBib* argument

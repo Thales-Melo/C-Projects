@@ -17,8 +17,6 @@ typedef struct Biblioteca {
 } tBib;
 
 
-
-
 tLivro* init_Books (int num_Books) {
   
     tLivro *L;
@@ -67,61 +65,69 @@ int read_Num_Books (char *file, tBib *B) {
 }
 
 
-void read_Bib_File (char *file, tBib *B) {
+void read_Bib_File(char *file, tBib *B) {
   FILE *F = fopen(file, "r");
-
-  int i=0;
-  char delim[3]=" | ";
-  while (!(feof(F))) {
-    char *line = strdup(getLine(F, i));
-    char *token = strtok(line, delim);
-    
-    for (int j=0; j<4; j++) {
-      token = strtok(NULL, delim);
-      switch (j) {
-        case 0:
-          B->Books[i]->title=strdup(token);
-        case 1:
-          B->Books[i]->author=strdup(token);
-        case 2:
-          B->Books[i]->edit=strdup(token);
-        case 3:
-          B->Books[i]->num_Pages=strtol(token, NULL, 10);
-    }
-    i++;
-    
-    
+  if (F == NULL) {
+    printf("Erro ao abrir o arquivo %s\n", file);
+    return;
   }
+
+  int i = 0;
+  while (!feof(F)) {
+
+    char *line = strdup(getLine(F, i));
+    store_Bib_Data(B, line, i);
+    free(line);
+    i++;
+  }
+  
   fclose(F);
 }
 
+void store_Bib_Data (tBib *B, char *line, int i) {
+  
+      char *title, *author, *edit, *num_Pages;
+      char delim[3]=" | ";
+      title=strtok(line, delim);
+      author=strtok(NULL, delim);
+      edit=strtok(NULL, delim);
+      num_Pages=strtok(NULL, delim);
+  
+      B->Books[i]->title=title;
+      B->Books[i]->author=author;
+      B->Books[i]->edit=edit;
+      B->Books[i]->num_Pages=atoi(num_Pages);
+  
+    
+}
 
 void preenche_Livros (tBib *B) {
 
-    printf ("Existem %d espaços disponíveis para catalogar!\nEscolha um número de 1 a %d\n\n--> ", B->num_Books, B->num_Books);
-    
-    int choose;
-    scanf ("%d", &choose);
-  
+  B->Books=(tLivro**)realloc(B->Books, sizeof(tLivro*)*B->num_Books+1);
+  int lastEmpty = B->num_Books;
+  B->Books[lastEmpty]=init_Books(B->num_Books);
+  B->num_Books++;
+
     printf ("\nCATALOGUE!!!\n\n");
     printf ("Título --> ");
 
+    //limpa o buffer
     scanf ("%*c");
-  
-    fgets (B->Books[choose-1]->title, 100, stdin);
+
+    fgets (B->Books[lastEmpty]->title, 100, stdin);
 
     printf ("Autor --> ");
-    fgets (B->Books[choose-1]->author, 100, stdin);
+    fgets (B->Books[lastEmpty]->author, 100, stdin);
 
     printf ("Edição --> ");
-    int edit;
-    scanf ("%d", &edit);
-    B->Books[choose-1]->edit=edit;
+    scanf ("%s", B->Books[lastEmpty]->edit);
 
     printf ("Número de paginas --> ");
     int num_pags;
     scanf ("%d", &num_pags);
-    B->Books[choose-1]->num_Pages=num_pags;
+    B->Books[lastEmpty]->num_Pages=num_pags;
+
+    printf ("\n\nLivro cadastrado com sucesso!\n\n");
 
 }
 
@@ -134,7 +140,7 @@ void print_Livros (tBib *B) {
     printf ("\nLivro[%d]\n\n", choose);
     printf ("Título --> %s\n", B->Books[choose-1]->title);
     printf ("Autor --> %s\n", B->Books[choose-1]->author);
-    printf ("Edição --> %d\n", B->Books[choose-1]->edit);
+    printf ("Edição --> %s\n", B->Books[choose-1]->edit);
     printf ("Número de páginas --> %d", B->Books[choose-1]->num_Pages);
 
 }
@@ -178,20 +184,29 @@ void free_Bib (tBib *B) {
   
 }
 
-char *getLine (FILE *F, int line_number) {
 
-  int i=0;
-  char delim[]="\n";
-  char *token = strtok(token, delim);
-  
-  while (!(feof(F))) {
-    if (i==line_number) {
-      break;
+// IA fez
+char *getLine(FILE *F, int line_number) {
+    char *line = NULL;
+    size_t len = 0;
+    ssize_t read;
+    int current_line_number = 0;
+
+    // Percorre o arquivo linha por linha até encontrar a linha desejada
+    while ((read = getline(&line, &len, F)) != -1) {
+        current_line_number++;
+        if (current_line_number == line_number) {
+            // Copia a linha encontrada para uma nova string
+            char *result = malloc((strlen(line) + 1) * sizeof(char));
+            strcpy(result, line);
+            free(line);
+            return result;
+        }
     }
-    i++; 
-    token = strtok(NULL, delim);
-  }
 
-  return token;
-  
+    // Caso não encontre a linha desejada, retorna NULL
+    free(line);
+    return NULL;
 }
+
+
