@@ -7,4 +7,4 @@ This Termo program uses some important C concepts as:
 - Static Memory Allocation<br />
 - Text File Reading<br />
 <br />
-<sub>*Its important to remember that this project may not be 100% otimizated and it probablt doesn't use all right concepts of the C language, but at least it works and was crucial to our learning process*<sub /> 
+<sub>*Its important to remember that this project may not be 100% otimizated and it probably doesn't use all right concepts of the C language, but at least it works and was crucial to our learning process*<sub /> 
