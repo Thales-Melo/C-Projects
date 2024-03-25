@@ -1,0 +1,133 @@
+Workspace menu
+3
+Toggle navigation
+Web Scraping.R.r
+# Install and load the necessary packages
+
+install.packages("rvest")
+install.packages("tidyverse")
+
+library(rvest)
+library(tidyverse)
+
+
+# Use the read_html() function from the rvest package to read the HTML content of the webpage.
+url <- "https://www.imdb.com/search/title/?title_type=tv_series&genres=action&sort=num_votes,desc&start=1&explore=title_type,genres"
+
+
+# Read the HTML content of the webpage
+webpage <- read_html(url)
+
+
+# Use CSS selectors to extract the data you want
+
+#You can use the Selector Gadget extension for Chrome or Firefox to help you find the appropriate CSS selectors.
+
+# For example, to extract the titles of the TV series, you can use the following CSS selector:
+titles <- html_nodes(webpage, ".lister-item-header a") %>% html_text()
+
+
+# To extract the years the TV series were released, and remove brackets (), you can use the following CSS selector and str_replace_all:
+years <- html_nodes(webpage, ".lister-item-year") %>% html_text() %>% str_replace_all("[//(//)]", "")
+
+# Similarly, you can extract other information such as the ratings, votes, description and genres.
+genre <- html_nodes(webpage, ".genre") %>% html_text()
+rating <- html_nodes(webpage, ".ratings-imdb-rating strong") %>% html_text()
+desc <- html_nodes(webpage, ".ratings-bar+ .text-muted") %>% html_text()
+votes <- html_nodes(webpage, ".text-muted+ span") %>% html_text()
+
+
+# Check the number of columns of data per scrape match.  In this case it should be 50.
+length(titles)
+length(years)
+length(genre)
+length(rating)
+length(desc)
+length(votes)
+
+
+# Combine the extracted data into a data frame using the data.frame() function.
+data <- data.frame(
+                  title = titles,
+                  year = years,
+                  genre = genre,
+                  rating = rating,
+                  desc = desc,
+                  votes = votes
+                  )
+
+
+# View the scraped data
+view(data)
+
+
+
+
+
+
+#######
+
+
+
+
+
+
+Web Scraping Loop R r
+# Install and load the necessary packages
+
+install.packages("rvest")
+install.packages("tidyverse")
+
+library(rvest)
+library(tidyverse)
+
+
+# Initialize an empty data frame to store the scraped data
+dataloop <- data.frame()
+
+
+# Loop through the first 3 pages and scrape the data
+for (i in seq(from = 1, to = 101, by = 50)) {
+  
+  
+  # Construct the URL with the current value of start
+  urlloop <- paste0("https://www.imdb.com/search/title/?title_type=tv_series&genres=action&sort=num_votes,desc&start=", i ,"&explore=title_type,genres")
+  
+  # Read the HTML content of the webpage
+  webpageloop <- read_html(urlloop)
+  
+  # Extract the data from the webpage using CSS selectors
+  title <- html_nodes(webpageloop, ".lister-item-header a") %>% html_text()
+  year <- html_nodes(webpageloop, ".lister-item-year") %>% html_text() %>% str_replace_all("[//(//)]", "")
+  ratings <- html_nodes(webpageloop, ".ratings-imdb-rating strong") %>% html_text()
+  votes <- html_nodes(webpageloop, ".text-muted+ span") %>% html_text()
+  desc <- html_nodes(webpageloop, ".ratings-bar+ .text-muted") %>% html_text()
+  
+  # Combine the extracted data into a data frame
+  page_data <- data.frame(title, year, ratings, votes, desc)
+  
+  # Add the page data to the overall data frame
+  dataloop <- bind_rows(dataloop, page_data)
+  
+  # Pause for a few seconds to avoid overloading the server
+  Sys.sleep(3)
+}
+
+# View the scraped data
+view(dataloop)
+
+
+
+
+
+
+
+
+
+######
+
+
+
+
+
+
